@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>OconicsBuild</id>
+    <title>Standard Oconics Build Tools</title>
+    <version>0.0</version>
+    <authors>.NET Foundation, Oconics Pty Ltd</authors>
+    <owners>Oconics Pty Ltd</owners>
+    <description>Oconics Build Tooling</description>
+    <language>en-US</language>
+  </metadata>
+  <files>
+    <file src="build\*.*" target="build" />
+  </files>
+</package>
