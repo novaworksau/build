@@ -10,7 +10,7 @@ dnvmUse=''
 */}
 
 default dnvmUse=''
-var dnvmPath = '${ Path.Combine(Directory.GetCurrentDirectory(), "packages", "KoreBuild", "build", "dnvm") }'
+var dnvmPath = '${ Path.Combine(Directory.GetCurrentDirectory(), "packages", "OconicsBuild", "build", "dnvm") }'
 
 exec program='cmd' commandline='/C dnu ${command}' if='!IsLinux && string.IsNullOrEmpty(dnvmUse)'
 

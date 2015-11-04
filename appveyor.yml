@@ -1,0 +1,17 @@
+version: "0.2.1-rc1-{build}"
+configuration:
+  - Release
+branches:
+  except:
+    - /feature.*/
+	
+init:
+  - git config --global core.autocrlf input
+
+test: off
+
+build_script:
+  - nuget.exe pack
+
+artifacts:
+  - path: \*.nupkg
