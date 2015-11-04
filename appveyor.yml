@@ -4,7 +4,7 @@ configuration:
 branches:
   except:
     - /feature.*/
-	
+
 init:
   - git config --global core.autocrlf input
 
@@ -14,4 +14,4 @@ build_script:
   - nuget.exe pack
 
 artifacts:
-  - path: \*.nupkg
+  - path: '*.nupkg'
