@@ -62,7 +62,7 @@ projectFile=''
             }
             else if (!IsLinux || !string.IsNullOrEmpty(KOREBUILD_TEST_DNXCORE))
             {
-                Dnx("test" + testArgs, projectFolder, "default -runtime clr");
+                Dnx("test" + testArgs, projectFolder, "default -runtime coreclr");
             }
         }
     }
