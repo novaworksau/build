@@ -27,24 +27,23 @@ SET PATH=%DOTNET_LOCAL_INSTALL_FOLDER_BIN%;%PATH%
 ECHO Setting DOTNET_HOME to %DOTNET_LOCAL_INSTALL_FOLDER%
 SET DOTNET_HOME=%DOTNET_LOCAL_INSTALL_FOLDER%
 
-REM ==== Temporary ====		
-IF "%BUILDCMD_DNX_VERSION%"=="" (		
-    SET BUILDCMD_DNX_VERSION=latest		
-)		
-IF "%SKIP_DNX_INSTALL%"=="" (		
-    CALL %KOREBUILD_FOLDER%\build\dnvm install %BUILDCMD_DNX_VERSION% -runtime CoreCLR -arch x86 -alias default		
-    CALL %KOREBUILD_FOLDER%\build\dnvm install default -runtime CLR -arch x86 -alias default		
-) ELSE (		
-    CALL %KOREBUILD_FOLDER%\build\dnvm use default -runtime CLR -arch x86		
-)		
+REM ==== Temporary ====
+IF "%BUILDCMD_DNX_VERSION%"=="" (
+    SET BUILDCMD_DNX_VERSION=latest
+)
+IF "%SKIP_DNX_INSTALL%"=="" (
+    CALL %KOREBUILD_FOLDER%\build\dnvm install %BUILDCMD_DNX_VERSION% -runtime CoreCLR -arch x64 -alias default
+    CALL %KOREBUILD_FOLDER%\build\dnvm install default -runtime CLR -arch x64 -alias default
+) ELSE (
+    CALL %KOREBUILD_FOLDER%\build\dnvm use default -runtime CLR -arch x64
+)
 REM ============================
- 
+
 SET MAKEFILE_PATH=makefile.shade
 IF NOT EXIST %MAKEFILE_PATH% (
-	SET MAKEFILE_PATH=%KOREBUILD_FOLDER%\build\makefile.shade
+	SET MAKEFILE_PATH=%KOREBUILD_FOLDER%\makefile.shade
 )
 ECHO Using makefile: %MAKEFILE_PATH%
-
 
 REM Don't use full paths. Sake doesn't support them!
 "%~dp0Sake\tools\Sake.exe" -I %KOREBUILD_FOLDER%\build -f %MAKEFILE_PATH% %*
