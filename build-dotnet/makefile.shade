@@ -10,13 +10,14 @@ use import="Environment"
     }
 
     if (E("APPVEYOR") != null && E("APPVEYOR_REPO_BRANCH") != "master" && (E("APPVEYOR_REPO_TAG") == "false" || E("APPVEYOR_REPO_TAG") == "False")) {
-        E("DOTNET_BUILD_VERSION", "develop-" + E("K_BUILD_VERSION"));
+        E("KOREBUILD_DOTNET_PACK_OPTIONS", E("APPVEYOR_REPO_BRANCH") + "-" + E("K_BUILD_VERSION"));
+        E("DOTNET_BUILD_VERSION", E("APPVEYOR_REPO_BRANCH") + "-" E("K_BUILD_VERSION"));
     }
 
     if (E("APPVEYOR") != null && (E("APPVEYOR_REPO_TAG") == "true" || E("APPVEYOR_REPO_TAG") == "True")) {
         E("DOTNET_BUILD_VERSION", "release-" + E("K_BUILD_VERSION"));
+        E("KOREBUILD_DOTNET_PACK_OPTIONS", "release-" + E("K_BUILD_VERSION"));
     }
-
 }
 
 var AUTHORS='Oconics Pty Ltd'

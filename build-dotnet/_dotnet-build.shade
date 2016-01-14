@@ -10,7 +10,7 @@ configuration=''
     Optional. The configuration to build in. Defaults to 'Debug'.
 */}
 
-default configuration = 'Debug'
+default configuration = 'Release'
 default build_options=' ${E("KOREBUILD_DOTNET_BUILD_OPTIONS")}'
 
 @{
