@@ -32,10 +32,10 @@ IF "%BUILDCMD_DNX_VERSION%"=="" (
     SET BUILDCMD_DNX_VERSION=latest
 )
 IF "%SKIP_DNX_INSTALL%"=="" (
-    CALL %KOREBUILD_FOLDER%\build\dnvm install %BUILDCMD_DNX_VERSION% -runtime CoreCLR -arch x64 -alias default
-    CALL %KOREBUILD_FOLDER%\build\dnvm install default -runtime CLR -arch x64 -alias default
+    CALL %KOREBUILD_FOLDER%\dnvm install %BUILDCMD_DNX_VERSION% -runtime CoreCLR -arch x64 -alias default
+    CALL %KOREBUILD_FOLDER%\dnvm install default -runtime CLR -arch x64 -alias default
 ) ELSE (
-    CALL %KOREBUILD_FOLDER%\build\dnvm use default -runtime CLR -arch x64
+    CALL %KOREBUILD_FOLDER%\dnvm use default -runtime CLR -arch x64
 )
 REM ============================
 
@@ -46,4 +46,4 @@ IF NOT EXIST %MAKEFILE_PATH% (
 ECHO Using makefile: %MAKEFILE_PATH%
 
 REM Don't use full paths. Sake doesn't support them!
-"%~dp0Sake\tools\Sake.exe" -I %KOREBUILD_FOLDER%\build -f %MAKEFILE_PATH% %*
+"%~dp0Sake\tools\Sake.exe" -I %KOREBUILD_FOLDER% -f %MAKEFILE_PATH% %*
