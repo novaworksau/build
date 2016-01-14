@@ -15,7 +15,7 @@ default currentDir = '${Directory.GetCurrentDirectory()}'
 default dnxDir = '${ currentDir }'
 
 default dnvmUse=''
-var dnvmPath = '${ Path.Combine(Directory.GetCurrentDirectory(), ".build", "KoreBuild-dotnet", "build", "dnvm") }'
+var dnvmPath = '${ Path.Combine(Directory.GetCurrentDirectory(), ".build", "OconicsBuild", "build-dotnet", "dnvm") }'
 
 exec program='cmd' commandline='/C dnx ${command}' workingdir='${dnxDir}' if='!IsLinux && string.IsNullOrEmpty(dnvmUse)'
 
