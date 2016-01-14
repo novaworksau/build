@@ -11,5 +11,6 @@
   </metadata>
   <files>
     <file src="build\*.*" target="build" />
+    <file src="build-dotnet\*.*" target="build-dotnet" />
   </files>
 </package>
