@@ -22,7 +22,7 @@ projectFile=''
     var commands = project.ValueAsJsonObject("commands");
 
     if (commands != null && commands.Keys.Contains("test"))
-    {    
+    {
         var projectFolder = Path.GetDirectoryName(projectFile);
         var projectName = Path.GetFileName(projectFolder);
 
@@ -33,10 +33,10 @@ projectFile=''
         }
 
         var configs = project.ValueAsJsonObject("frameworks");
-        IEnumerable<string> targetFrameworks = configs == null? 
-            new string[0]: 
+        IEnumerable<string> targetFrameworks = configs == null?
+            new string[0]:
             configs.Keys.Where(k => k.StartsWith("dnx", StringComparison.OrdinalIgnoreCase));
-        
+
         foreach (var framework in targetFrameworks)
         {
             var testArgs = noParallelTestProjects.Contains(projectName) ? " -parallel none" : "";
@@ -49,7 +49,7 @@ projectFile=''
                     testArgs = " -parallel none";
                 }
 
-                Dnx("test" + testArgs, projectFolder, "default -runtime coreclr");
+                Dnx("test" + testArgs, projectFolder, "default -runtime clr");
             }
         }
     }
