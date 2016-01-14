@@ -21,7 +21,7 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
 @{
   if (string.IsNullOrEmpty(E("DOTNET_BUILD_VERSION")))
   {
-    E("DOTNET_BUILD_VERSION", BuildNumber);
+    E("DOTNET_BUILD_VERSION", E("APPVEYOR_REPO_BRANCH") + "-" + BuildNumber);
   }
   if (string.IsNullOrEmpty(E("DOTNET_AUTHOR")))
   {
@@ -179,6 +179,7 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
   @{
     AddToE("KOREBUILD_BOWER_INSTALL_OPTIONS", "--quiet");
     AddToE("KOREBUILD_NPM_INSTALL_OPTIONS", "--quiet");
+    AddToE("KOREBUILD_DOTNET_RESTORE_OPTIONS", "--quiet");
     Quiet = true;
   }
 

@@ -11,7 +11,6 @@ use import="Environment"
     }
 
     if (E("APPVEYOR") != null && E("APPVEYOR_REPO_BRANCH") != "master" && (E("APPVEYOR_REPO_TAG") == "false" || E("APPVEYOR_REPO_TAG") == "False")) {
-        E("KOREBUILD_DOTNET_PACK_OPTIONS", "--version-suffix " + E("APPVEYOR_REPO_BRANCH") + "-" + E("K_BUILD_VERSION"));
         E("DOTNET_BUILD_VERSION", E("APPVEYOR_REPO_BRANCH") + "-" E("K_BUILD_VERSION"));
     }
 
