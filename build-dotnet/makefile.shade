@@ -10,7 +10,7 @@ use import="Environment"
     }
 
     if (E("APPVEYOR") != null && E("APPVEYOR_REPO_BRANCH") != "master" && (E("APPVEYOR_REPO_TAG") == "false" || E("APPVEYOR_REPO_TAG") == "False")) {
-        E("DOTNET_BUILD_VERSION", E("APPVEYOR_REPO_BRANCH") + "-" + E("K_BUILD_VERSION"));
+        E("DOTNET_BUILD_VERSION", "develop-" + E("K_BUILD_VERSION"));
     }
 
     if (E("APPVEYOR") != null && (E("APPVEYOR_REPO_TAG") == "true" || E("APPVEYOR_REPO_TAG") == "True")) {
