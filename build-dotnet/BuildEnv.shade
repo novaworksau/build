@@ -18,14 +18,29 @@ functions
         return version;
     }
 
+    string BuildVersion{
+        get
+        {
+            if(string.IsNullOrEmpty(E("APPVEYOR_BUILD_VERSION")))
+            {
+                 return "1";
+            }
+            return E("APPVEYOR_BUILD_VERSION");
+        }
+    }
+
     string BuildNumber
     {
         get
         {
-            return "t" + DateTime.UtcNow.ToString("yyMMddHHmmss");
+        if(string.IsNullOrEmpty(E("APPVEYOR_BUILD_NUMBER")))
+        {
+             return "1";
+        }
+        return E("APPVEYOR_BUILD_NUMBER");
         }
     }
-    
+
     string DotBuildFolderPath
     {
         get
@@ -33,12 +48,12 @@ functions
             return Environment.GetEnvironmentVariable("BUILD_FOLDER");
         }
     }
-    
+
     string KoreBuildFolderPath
     {
-        get 
-        { 
-            return Environment.GetEnvironmentVariable("KOREBUILD_FOLDER"); 
+        get
+        {
+            return Environment.GetEnvironmentVariable("KOREBUILD_FOLDER");
         }
     }
   }
