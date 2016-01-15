@@ -13,11 +13,12 @@ projectFile=''
     var projectName=Path.GetFileName(projectFolder);
     var projectBin=Path.Combine(projectFolder, "bin", "Release");
 
-    //var outputArg = string.IsNullOrEmpty(outputFolder)? "": "--output " + outputFolder;
-    //var frameworkArg = string.IsNullOrEmpty(framework)? "": "--framework " + framework;
+    var publishFolder = Path.Combine(projectFolder, ".publish");
+
+    var outputArg = "--output " + publishFolder;
 
     DeleteFolder(projectBin);
 
-    var dotnetArgs=string.Format("publish --configuration {0} {1}", "Release", projectFolder);
+    var dotnetArgs=string.Format("publish {0} --configuration {1} {2} --no-source --runtime active --quiet", projectFolder, "Release", outputArg);
     Dotnet(dotnetArgs);
 }
