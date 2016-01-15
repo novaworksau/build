@@ -175,7 +175,7 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
 #publish-web target='package' if='Directory.Exists("src")' description='Publish Web Projects'
   @{
     var projectFiles = Files.Include("src/**/hosting.json").ToList();
-    projectFiles.ForEach(projectFile => DotnetPublish(projectFile, '', Configuration));
+    projectFiles.ForEach(projectFile => DotnetPublish(projectFile));
   }
 
 #make-roslyn-fast
