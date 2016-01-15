@@ -11,7 +11,7 @@ projectFile=''
 @{
     var projectFolder=Path.GetDirectoryName(projectFile);
     var projectName=Path.GetFileName(projectFolder);
-    var projectBin=Path.Combine(projectFolder, "bin", "Release"");
+    var projectBin=Path.Combine(projectFolder, "bin", "Release");
 
     //var outputArg = string.IsNullOrEmpty(outputFolder)? "": "--output " + outputFolder;
     //var frameworkArg = string.IsNullOrEmpty(framework)? "": "--framework " + framework;
