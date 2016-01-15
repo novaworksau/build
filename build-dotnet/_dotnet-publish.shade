@@ -15,7 +15,7 @@ projectFile=''
 
     var publishFolder = Path.Combine(projectFolder, ".publish");
 
-    var outputArg = "--output " + publishFolder;
+    var outputArg = "--o " + publishFolder;
 
     DeleteFolder(projectBin);
 
