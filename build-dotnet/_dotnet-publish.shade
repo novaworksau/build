@@ -12,8 +12,8 @@ projectFile=''
     var projectFolder=Path.GetDirectoryName(projectFile);
     var projectName=Path.GetFileName(projectFolder);
     var projectBin=Path.Combine(projectFolder, "bin", "Release");
-
-    var publishFolder = Path.Combine(projectFolder, ".publish");
+    var folderName = Path.GetFileName(projectFolder);
+    var publishFolder = Path.Combine("C:\projects", folderName, ".publish");
 
     var outputArg = "--out " + publishFolder;
 
