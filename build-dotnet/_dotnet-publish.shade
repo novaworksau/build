@@ -13,7 +13,7 @@ projectFile=''
     var projectName=Path.GetFileName(projectFolder);
     var projectBin=Path.Combine(projectFolder, "bin", "Release");
     var folderName = Path.GetFileName(projectFolder);
-    var publishFolder = Path.Combine("C:\projects", folderName, ".publish");
+    var publishFolder = Path.Combine(@"C:\projects", folderName, ".publish");
 
     var outputArg = "--out " + publishFolder;
 
