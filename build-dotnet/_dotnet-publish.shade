@@ -18,6 +18,6 @@ projectFile=''
 
     DeleteFolder(projectBin);
 
-    var dotnetArgs=string.Format("publish --configuration {0} {1}", configuration, projectFolder);
+    var dotnetArgs=string.Format("publish --configuration {0} {1}", "Release", projectFolder);
     Dotnet(dotnetArgs);
 }

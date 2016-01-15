@@ -310,7 +310,7 @@ macro name="DotnetBuild" projectFile='string' configuration='string'
 macro name="DotnetPack" projectFile='string' dotnetPackOutputDir='string' configuration='string'
     dotnet-pack
 
-macro name="DotnetPublish" projectFile='string' outputFolder='string' framework='string'
+macro name="DotnetPublish" projectFile='string'
     dotnet-publish
 
 macro name="DotnetTest" projectFile='string' testParallel='bool'

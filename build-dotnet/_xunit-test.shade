@@ -51,7 +51,7 @@ projectFile=''
                     }
 
                     var publishFolder = Path.Combine(projectFolder, ".testPublish", framework);
-                    DotnetPublish(projectFile, publishFolder, framework);
+                    DotnetPublish(projectFile);
                     Copy(runnerFolder, publishFolder, "*.*", true);
 
                     var targetTestDll = projectName + ".dll";
