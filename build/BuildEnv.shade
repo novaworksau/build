@@ -48,4 +48,12 @@ functions
             return Environment.GetEnvironmentVariable("KOREBUILD_BUILD_V2") == "1";
         }
     }
+
+    bool RunTests
+    {
+        get
+        {
+            return Environment.GetEnvironmentVariable("OCONICS_RUN_TESTS").ToLower() == "true";
+        }
+    }
   }
