@@ -36,6 +36,12 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
     Configuration = "Release";
     E("Configuration", Configuration);
   }
+  if(!RunTests)
+  {
+    Log.Warn("**********************");
+    Log.Warn("**** NOT TESTING *****");
+    Log.Warn("**********************");
+  }
 }
 
 #restore-npm-modules
@@ -158,7 +164,7 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
   nuget-packages-add sourcePackagesDir='${BUILD_DIR}' targetPackagesDir='${E("PACKAGES_PUBLISH_DIR")}'
   nuget-resilient-publish sourcePackagesDir='${BUILD_DIR}' nugetFeed='${E("NUGET_PUBLISH_FEED")}' if='!string.IsNullOrEmpty(E("NUGET_PUBLISH_FEED"))'
 
-#xunit-test target='test' if='Directory.Exists("test")'
+#xunit-test target='test' if='Directory.Exists("test") && RunTests'
   @{
     var projectFiles = Files.Include("test/**/project.json").Exclude("**/bin/*/app/project.json").ToList();
     //projectFiles.ForEach(projectFile => XunitTest(projectFile, testParallel: false));

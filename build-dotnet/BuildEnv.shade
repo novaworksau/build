@@ -56,4 +56,12 @@ functions
             return Environment.GetEnvironmentVariable("KOREBUILD_FOLDER");
         }
     }
+    
+    bool RunTests
+    {
+        get
+        {
+            return Environment.GetEnvironmentVariable("OCONICS_RUN_TESTS").ToLower() == "true";
+        }
+    }
   }
