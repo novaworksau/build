@@ -26,5 +26,5 @@ default configuration = 'Release'
     var outputArg = string.IsNullOrEmpty(outputFolder) ? "" : "--publish-folder " + outputFolder;
 
     var dotnetArgs = string.Format("publish-iis {0} {1}", outputArg, projectFolder);
-    Dotnet(dotnetArgs);
+    Dotnet(dotnetArgs, projectFolder);
 }
