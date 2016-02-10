@@ -188,7 +188,7 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
     projectFiles.ForEach(projectFile => DnxTest(projectFile, testParallel: false));
   }
 
-#publish-web target='package' if='Directory.Exists("src")'
+#publish-web target='test' if='Directory.Exists("src")'
   @{
     var projectFiles = Files.Include("src/**/hosting.json").ToList();
     foreach(var projectFile in projectFiles)
