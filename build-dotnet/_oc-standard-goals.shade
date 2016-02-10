@@ -195,8 +195,10 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
     {
       var framework = "";
       var projectFolder = Path.GetDirectoryName(projectFile);
-      var publishFolder = Path.Combine(projectFolder, ".publish", framework);
+      var publishFolder = Path.Combine(projectFolder, ".published", framework);
+      var publishIISFolder = Path.Combine(projectFolder, ".publish", framework);
       DotnetPublish(projectFile, publishFolder, framework);
+      DotnetPublishIIS(projectFile, publishIISFolder, framework);
       //projectFiles.ForEach(projectFile => DotnetPublish(projectFile));
     }
   }
@@ -376,6 +378,9 @@ macro name="DotnetPack" projectFile='string' dotnetPackOutputDir='string' config
 
 macro name="DotnetPublish" projectFile='string' outputFolder='string' framework='string'
     dotnet-publish
+
+macro name="DotnetPublishIIS" projectFile='string' outputFolder='string' framework='string'
+    dotnet-publish-iis
 
 macro name="DotnetTest" projectFile='string' testParallel='bool'
     dotnet-test
