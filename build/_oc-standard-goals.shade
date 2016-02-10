@@ -236,17 +236,17 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
     }
   }
 
-#publish-web target='package' if='Directory.Exists("src")' description='Publish Web Projects'
+#publish-web target='package' if='Directory.Exists("src")'
   @{
-    var projectFiles = Files.Include("src/**/hosting.json").ToList();
-    foreach(var projectFile in projectFiles)
-    {
-      var framework = "net451";
-      var projectFolder = Path.GetDirectoryName(projectFile);
-      var publishFolder = Path.Combine(projectFolder, ".testPublish", framework);
-      DotnetPublish(projectFile, publishFolder, framework);
-      //projectFiles.ForEach(projectFile => DotnetPublish(projectFile));
-    }
+      var projectFiles = Files.Include("src/**/hosting.json").ToList();
+      foreach(var projectFile in projectFiles)
+      {
+        var framework = "";
+        var projectFolder = Path.GetDirectoryName(projectFile);
+        var publishFolder = Path.Combine(projectFolder, ".publish", framework);
+        DotnetPublish(projectFile, publishFolder, framework);
+        //projectFiles.ForEach(projectFile => DotnetPublish(projectFile));
+      }
   }
 
 #make-roslyn-fast
