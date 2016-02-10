@@ -190,8 +190,8 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
 
 #publish-web target='package' if='Directory.Exists("src")' description='Publish Web Projects'
 @{
-    var projectFiles = Files.Include("src/**/hosting.json").ToList();
-    foreach(var projectFile in projectFiles)
+    var hostingFiles = Files.Include("src/**/hosting.json").ToList();
+    foreach(var projectFile in hostingFiles)
     {
       var framework = "net451";
       var projectFolder = Path.GetDirectoryName(projectFile);
