@@ -10,11 +10,11 @@ IF "%NUGET_PATH%"=="" (
 	EXIT /B 1
 )
 IF "%KOREBUILD_DOTNET_CHANNEL%"=="" (
-    SET KOREBUILD_DOTNET_CHANNEL=beta
+    SET KOREBUILD_DOTNET_CHANNEL=dev
 )
 
 IF "%KOREBUILD_DOTNET_VERSION%"=="" (
-    SET KOREBUILD_DOTNET_VERSION=1.0.0.001248
+    SET KOREBUILD_DOTNET_VERSION=1.0.1.001200
 )
 
 IF NOT EXIST Sake  (
@@ -49,7 +49,7 @@ IF "%BUILDCMD_DNX_VERSION%"=="" (
     SET BUILDCMD_DNX_VERSION=latest
 )
 IF "%SKIP_DNX_INSTALL%"=="" (
-    CALL %KOREBUILD_FOLDER%\build\dnvm install %BUILDCMD_DNX_VERSION% -runtime CLR -arch x64 -alias default		
+    CALL %KOREBUILD_FOLDER%\build\dnvm install %BUILDCMD_DNX_VERSION% -runtime CLR -arch x64 -alias default
     CALL %KOREBUILD_FOLDER%\build\dnvm install default -runtime CLR -arch x64 -alias default
 ) ELSE (
     CALL %KOREBUILD_FOLDER%\build\dnvm use default -runtime CLR -arch x64
