@@ -33,7 +33,7 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
   }
   if (string.IsNullOrEmpty(Configuration))
   {
-    Configuration = "Release";
+    Configuration = "Debug";
     E("Configuration", Configuration);
   }
 }
@@ -68,7 +68,7 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
 -// Target order is important because clean-npm-modules may (re)create bin folder.
 #deep-clean .clean-npm-modules .clean-bin-folder description='Clean folders that may cause problems for `git clean`.'
 
-#repo-initialize target='initialize'
+#repo-initialize target='initialize' if='!NoRestore'
   dotnet-restore
 
 #target-dir-clean target='clean'
@@ -101,6 +101,22 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
     {
         File.Copy(nupkg, Path.Combine(BUILD_DIR, Path.GetFileName(nupkg)), true);
     }
+  }
+
+#build-test target='compile' if='Directory.Exists("test") && !BuildSrcOnly'
+  @{
+    var projectFiles = Files.Include("test/**/project.json")
+      // weird bug in double-star globbing can include any file ending in project.json as well
+      .Where(f => Path.GetFileName(f).Equals("project.json", StringComparison.OrdinalIgnoreCase))
+      .ToList();
+
+    projectFiles.ForEach(projectFile => DotnetBuild(projectFile, Configuration));
+  }
+
+#build-samples target='compile' if='Directory.Exists("samples") && !BuildSrcOnly'
+  @{
+    var projectFiles = Files.Include("samples/**/project.json").ToList();
+    projectFiles.ForEach(projectFile => DotnetBuild(projectFile, Configuration));
   }
 
 #native-compile target='compile' if='!IsLinux && Directory.Exists(Path.Combine(BASE_DIR, "src"))'
@@ -162,21 +178,41 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
   @{
     var projectFiles = Files.Include("test/**/project.json").Exclude("**/bin/*/app/project.json").ToList();
     projectFiles.ForEach(projectFile => XunitTest(projectFile, testParallel: false));
-    //projectFiles.ForEach(projectFile => DotnetTest(projectFile, testParallel: false));
+    projectFiles.ForEach(projectFile => DotnetTest(projectFile, testParallel: false));
     projectFiles.ForEach(projectFile => DnxTest(projectFile, testParallel: false));
-  }
-
-#build-samples target='test' if='Directory.Exists("samples")'
-  @{
-    var projectFiles = Files.Include("samples/**/project.json").ToList();
-    projectFiles.ForEach(projectFile => DotnetBuild(projectFile, Configuration));
   }
 
 #make-roslyn-fast
   ngen-roslyn
 
+#resx
+   @{
+     var cultures = CultureInfo.GetCultures(CultureTypes.NeutralCultures | CultureTypes.InstalledWin32Cultures | CultureTypes.SpecificCultures);
+     foreach (var file in Directory.EnumerateFiles(BASE_DIR, "*.resx", SearchOption.AllDirectories))
+     {
+        var splitFileName = Path.GetFileNameWithoutExtension(file).Split(new string[] { "." }, StringSplitOptions.None);
+
+        if (splitFileName.Length > 1)
+        {
+            var localeString = splitFileName.Last();
+            if (!cultures.Any(c => localeString.Equals(c.Name)))
+            {
+                UpdateResx(file);
+            }
+        }
+        else
+        {
+            UpdateResx(file);
+        }
+     }
+   }
+
+#--no-restore
+  @{ NoRestore = true; }
+
 #--quiet
   @{
+    AddToE("KOREBUILD_DOTNET_RESTORE_OPTIONS", "--verbosity minimal");
     AddToE("KOREBUILD_BOWER_INSTALL_OPTIONS", "--quiet");
     AddToE("KOREBUILD_NPM_INSTALL_OPTIONS", "--quiet");
     Quiet = true;
@@ -189,7 +225,7 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
 
 #--test-dnxcore
   @{
-    E("KOREBUILD_TEST_DNXCORE", "1");
+     Log.Warn("The --test-dnxcore flag is no longer supported. It will be ignored.");
   }
 
 #stylecop if='Directory.Exists("src")'
@@ -198,6 +234,7 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
 
 functions @{
     private static bool Quiet { get; set; }
+    private static bool NoRestore { get; set; }
 
     string E(string key) { return Environment.GetEnvironmentVariable(key); }
     void E(string key, string value) { Environment.SetEnvironmentVariable(key, value); }
@@ -275,6 +312,11 @@ functions @{
     {
       get { return E("KOREBUILD_VERIFY_NUPKGS") == "1"; }
     }
+
+    bool BuildSrcOnly
+    {
+      get { return E("KOREBUILD_BUILD_SRC_ONLY") == "1"; }
+    }
 }
 
 macro name='Exec' program='string' commandline='string'
@@ -310,7 +352,7 @@ macro name="DotnetBuild" projectFile='string' configuration='string'
 macro name="DotnetPack" projectFile='string' dotnetPackOutputDir='string' configuration='string'
     dotnet-pack
 
-macro name="DotnetPublish" projectFile='string'
+macro name="DotnetPublish" projectFile='string' outputFolder='string' framework='string'
     dotnet-publish
 
 macro name="DotnetTest" projectFile='string' testParallel='bool'
@@ -319,9 +361,11 @@ macro name="DotnetTest" projectFile='string' testParallel='bool'
 macro name="XunitTest" projectFile='string' testParallel='bool'
     xunit-test
 
-
 macro name='Dnx' command='string' dnxDir='string' dnvmUse='string'
     dnx
 
 macro name="DnxTest" projectFile='string' testParallel='bool'
     dnx-test
+
+macro name="UpdateResx" resxFile='string'
+    k-generate-resx

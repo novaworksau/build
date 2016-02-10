@@ -52,9 +52,8 @@ projectFile=''
                     }
 
                     var publishFolder = Path.Combine(projectFolder, ".testPublish", framework);
-                    DotnetPublish(projectFile);
+                    DotnetPublish(projectFile, publishFolder, framework);
                     Copy(runnerFolder, publishFolder, "*.*", true);
-
 
                     // Copy xunit.execution.desktop. This is required in order to load the binding
                     // redirects for dlls. See this thread for more details:

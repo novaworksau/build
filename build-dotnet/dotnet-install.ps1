@@ -3,36 +3,25 @@
 # Licensed under the MIT license. See LICENSE file in the project root for full license information.
 #
 
-param (
-    [string] $InstallDir = $null,
-    [string] $TargetPlatform = "x64",
-    [string] $Version = "Latest"
+param(
+   [string]$Channel="dev",
+   [string]$version="Latest"
 )
 
 $ErrorActionPreference="Stop"
 $ProgressPreference="SilentlyContinue"
 
-$Feed="https://dotnetcli.blob.core.windows.net/dotnet"
-$Channel="dev"
 $fileVersion = $Version
 if ($fileVersion -eq "Latest") {
     $fileVersion = "latest"
 }
-
-$DotNetFileName="dotnet-win-${TargetPlatform}.$fileVersion.zip"
+$Feed="https://dotnetcli.blob.core.windows.net/dotnet"
+$DotNetFileName="dotnet-win-x64.$fileVersion.zip"
 $DotNetUrl="$Feed/$Channel/Binaries/$Version"
-
-
-Write-Host $DotNetFileName
 
 function say($str)
 {
     Write-Host "dotnet_install: $str"
-}
-
-
-if (!$InstallDir) {
-    $InstallDir = "$env:LocalAppData\Microsoft\dotnet"
 }
 
 $InstallDir = $env:DOTNET_INSTALL_DIR
@@ -44,7 +33,7 @@ say "Preparing to install .NET Tools to $InstallDir"
 
 # Check if we need to bother
 $LocalFile = "$InstallDir\cli\.version"
-if ((Test-Path $LocalFile))
+if (Test-Path $LocalFile)
 {
     $LocalData = @(cat $LocalFile)
     $LocalHash = $LocalData[0].Trim()
@@ -73,7 +62,7 @@ if ((Test-Path $LocalFile))
         }
         elseif ($LocalVersion -eq $Version)
         {
-            say "You already have the local version"
+            say "$Version is already installed."
             exit 0
         }
     }

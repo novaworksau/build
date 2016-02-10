@@ -17,7 +17,10 @@ projectFile=''
     var projectText = File.ReadAllText(projectFile);
     var project = (JsonObject)Json.Deserialize(projectText);
 
-    if (project.Keys.Contains("testRunner"))
+    // This check is just used to transition from dnx to dotnet
+    var commands = project.ValueAsJsonObject("commands");
+
+    if (commands == null && project.Keys.Contains("testRunner"))
     {
         var projectFolder = Path.GetDirectoryName(projectFile);
         var projectName = Path.GetFileName(projectFolder);
@@ -39,12 +42,7 @@ projectFile=''
         {
             if (framework.StartsWith("dnxcore"))
             {
-                 var publishFolder = Path.Combine(projectFolder, ".testPublish", framework);
-                 DotnetPublish(projectFile);
-
-                var runnerExe = Path.Combine(publishFolder, "dotnet-test-xunit.exe");
-                var targetTestDll = Path.Combine(publishFolder, projectName + ".dll");
-                Exec(runnerExe, targetTestDll + " " + testArgs);
+                Dotnet("test " + testArgs, projectFolder);
             }
         }
     }
