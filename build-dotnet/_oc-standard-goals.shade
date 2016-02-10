@@ -193,7 +193,7 @@ default NUGET_FEED = 'https://api.nuget.org/v3/index.json'
     var hostingFiles = Files.Include("src/**/hosting.json").ToList();
     foreach(var projectFile in hostingFiles)
     {
-      var framework = "net451";
+      var framework = "";
       var projectFolder = Path.GetDirectoryName(projectFile);
       var publishFolder = Path.Combine(projectFolder, ".publish", framework);
       DotnetPublish(projectFile, publishFolder, framework);
