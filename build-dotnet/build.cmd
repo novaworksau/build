@@ -49,10 +49,10 @@ IF "%BUILDCMD_DNX_VERSION%"=="" (
     SET BUILDCMD_DNX_VERSION=latest
 )
 IF "%SKIP_DNX_INSTALL%"=="" (
-    CALL %KOREBUILD_FOLDER%\build\dnvm install %BUILDCMD_DNX_VERSION% -runtime CLR -arch x64 -alias default
-    CALL %KOREBUILD_FOLDER%\build\dnvm install default -runtime CLR -arch x64 -alias default
+    CALL %KOREBUILD_FOLDER%\dnvm install %BUILDCMD_DNX_VERSION% -runtime CLR -arch x64 -alias default
+    CALL %KOREBUILD_FOLDER%\dnvm install default -runtime CLR -arch x64 -alias default
 ) ELSE (
-    CALL %KOREBUILD_FOLDER%\build\dnvm use default -runtime CLR -arch x64
+    CALL %KOREBUILD_FOLDER%\dnvm use default -runtime CLR -arch x64
 )
 REM ============================
 
