@@ -346,6 +346,9 @@ macro name="Copy" sourceDir='string' outputDir='string' include='string' overwri
 macro name="CopyFolder" sourceDir='string' outputDir='string' overwrite='bool'
     copy
 
+macro name='Dnu' command='string'
+    dnu
+
 macro name='Dotnet' command='string'
     dotnet
 
