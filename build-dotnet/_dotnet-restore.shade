@@ -12,4 +12,4 @@ default restoreDir = '${ currentDir }'
 
 default restore_options=' ${ E("KOREBUILD_DOTNET_RESTORE_OPTIONS") }'
 
-dnu command='restore${ restore_options }' workingDir='${ restoreDir }'
+dotnet command='restore${ restore_options }' workingDir='${ restoreDir }'
