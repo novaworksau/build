@@ -29,6 +29,6 @@ default configuration = 'Release'
 
     DeleteFolder(projectBin);
 
-    var dotnetArgs=string.Format("publish {0} --configuration {1} {2} --no-source --runtime active --quiet", projectFolder, "Release", outputArg);
+    var dotnetArgs=string.Format("publish {0} --configuration {1} {2} --no-source --runtime active", projectFolder, "Release", outputArg);
     Dnu(dotnetArgs);
 }
