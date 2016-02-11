@@ -21,14 +21,10 @@ default configuration = 'Release'
 @{
     var projectFolder=Path.GetDirectoryName(projectFile);
     var projectName=Path.GetFileName(projectFolder);
-    var projectBin=Path.Combine(projectFolder, "bin", "Release");
-    var folderName = Path.GetFileName(projectFolder);
-    var publishFolder = Path.Combine(@"C:\projects", folderName, ".publish");
+    var projectBin=Path.Combine(projectFolder, "bin", configuration);
 
-    var outputArg = "--out " + publishFolder;
+    var outputArg = string.IsNullOrEmpty(outputFolder) ? "" : "--publish-folder " + outputFolder;
 
-    DeleteFolder(projectBin);
-
-    var dotnetArgs=string.Format("publish {0} --configuration {1} {2} --no-source --runtime active", projectFolder, "Release", outputArg);
-    Dnu(dotnetArgs);
+    var dotnetArgs = string.Format("publish-iis {0}", outputArg);
+    Dotnet(dotnetArgs, projectFolder);
 }
