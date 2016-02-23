@@ -105,3 +105,4 @@ say "The .NET Tools have been installed to $InstallDir\cli!"
 
 # New layout
 say "Add '$InstallDir\cli\bin' to your PATH to use dotnet"
+Add-AppveyorMessage -Message "$DotNetFileName installed from $DotNetUrl" -Category Information
